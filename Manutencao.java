@@ -113,14 +113,16 @@ public class Manutencao extends IdAutomatico {
         return ferramenta;
     }
 
-    // metodo para cadastrar uma nova manutenção com ferramenta
+    // metodo para obter a lista de ferramentas disponíveis
     public boolean setFerramenta() {
         List<Ferramenta> ferramentas = Ferramenta.getFerramentas();
 
         // Exibe as ferramentas disponíveis
         System.out.println("\nFerramentas disponíveis:");
         for (Ferramenta ferramenta : ferramentas) {
-            System.out.println("\nID: " + ferramenta.getId() + " - " + ferramenta.getNomeFerramenta());
+            if (ferramenta.getStatus() == Ferramenta.Status.DISPONIVEL) {
+                System.out.println("\nID: " + ferramenta.getId() + " - " + ferramenta.getNomeFerramenta());
+            }
         }
 
         System.out.println("\nDigite o ID da ferramenta que deseja cadastrar a manutenção:");
@@ -275,7 +277,7 @@ public class Manutencao extends IdAutomatico {
                 String data = scanner.nextLine();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate localDate = LocalDate.parse(data, formatter);
-                this.inicioOcorrencia = localDate.atStartOfDay();
+                this.inicioManutencao = localDate.atStartOfDay();
                 System.out.println("Data registrada: " + localDate.format(formatter));
                 break;
             } catch (DateTimeException e) {
@@ -315,22 +317,25 @@ public class Manutencao extends IdAutomatico {
 
     // Método para cadastrar a manutenção
     public static void cadastrarManutencao() {
-        // listar ferramentas
         List<Ferramenta> ferramentas = Ferramenta.getFerramentas();
-
+        // Primeiro verifica se existem ferramentas cadastradas
         if (ferramentas.isEmpty()) {
             System.out.println("Não há ferramentas cadastradas.");
             return;
         }
 
-         // Exibir apenas ferramentas disponíveis
-        System.out.println("\nFerramentas disponíveis para manutenção:");
+        // Verifica se existe alguma ferramenta disponível
+        boolean temFerramentaDisponivel = false;
         for (Ferramenta ferramenta : ferramentas) {
             if (ferramenta.getStatus() == Ferramenta.Status.DISPONIVEL) {
-                System.out.println("ID: " + ferramenta.getId() + 
-                                " - Nome: " + ferramenta.getNomeFerramenta() +
-                                " - Status: " + ferramenta.getStatus().getDescricao());
-                }
+                temFerramentaDisponivel = true;
+                break;
+            }
+        }
+
+        if (!temFerramentaDisponivel) {
+            System.out.println("Não há ferramentas disponíveis para manutenção no momento.");
+            return;
         }
 
         Manutencao manutencao = new Manutencao(null, null, null, null, null, null, null, null, null);
@@ -338,8 +343,6 @@ public class Manutencao extends IdAutomatico {
         if (!manutencao.setFerramenta()) {
             return;
         }
-
-    
 
         manutencao.setMotivo();
         manutencao.setTipoServico();
@@ -353,6 +356,10 @@ public class Manutencao extends IdAutomatico {
         // Adiciona a manutenção à lista de manutenções
         manutencoes.add(manutencao);
 
+        // Altera o status da ferramenta para EM_MANUTENCAO
+        manutencao.getFerramenta().setStatusAutomatico(Ferramenta.Status.EM_MANUTENCAO);
+ 
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("Manutenção cadastrada com sucesso!" +
                 "\nID: " + manutencao.getId() +
@@ -365,8 +372,7 @@ public class Manutencao extends IdAutomatico {
                 "\nData Início: " + manutencao.getDataInicio().format(formatter) +
                 "\nData Início Manutenção: " + manutencao.getDataInicioManutencao().format(formatter) +
                 "\nData Fim Manutenção: "
-                + (manutencao.getDataFimManutencao() != null ? manutencao.getDataFimManutencao().format(formatter)
-                        : "Em andamento"));
+                + (manutencao.getDataFimManutencao() != null ? manutencao.getDataFimManutencao().format(formatter) : "Em andamento"));
     }
 
     // Método para listar todas as manutenções cadastradas

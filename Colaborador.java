@@ -13,7 +13,7 @@ public class Colaborador extends IdAutomatico {
     // Objeto Scanner para leitura de dados do usuário
     private static Scanner scanner = new Scanner(System.in);
 
-    // Enum que define as possíveis funções de um colaborador
+    // Enum que define as funções de um colaborador
     public enum Funcao {
         MONTADOR(1, "MONTADOR"),
         MARCENEIRO(2, "MARCENEIRO"),
@@ -29,7 +29,6 @@ public class Colaborador extends IdAutomatico {
             this.descricao = descricao;
         }
 
-        // Getters do enum
         public int getCodigo() {
             return codigo;
         }
@@ -49,7 +48,7 @@ public class Colaborador extends IdAutomatico {
         }
     }
 
-    // Enum que define os possíveis status de um colaborador
+    // Enum que define status de um colaborador
     public enum Status {
         ATIVO(1, "ATIVO"),
         INATIVO(2, "INATIVO");
@@ -103,7 +102,6 @@ public class Colaborador extends IdAutomatico {
         } while (true);
     }
 
-    // Getter para o nome do colaborador
     public String getNomeColaborador() {
         return nomeColaborador;
     }

@@ -11,11 +11,10 @@ public class Ferramenta extends IdAutomatico {
     private static Scanner scanner = new Scanner(System.in);
     private static List<Ferramenta> ferramentas = new ArrayList<>();
 
-
     // Enum de Status
     public enum Status {
         DISPONIVEL(1, "DISPONIVEL"),
-        EM_MANUTENCAO(2, "MANUTENCAO"),
+        EM_MANUTENCAO(2, "EM MANUTENCAO"),
         EM_USO(3, "EM USO"),
         INDISPONIVEL(4, "INDISPONIVEL");
 
@@ -117,12 +116,16 @@ public class Ferramenta extends IdAutomatico {
         this.status = Status.getByCodigo(statusCodigo);
     }
 
-
     public Status getStatus() {
         return status;
     }
 
-    
+    public void setStatusAutomatico(Status status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status não pode ser nulo.");
+        }
+        this.status = status;
+    }
 
     // Método para definir o tipo de ferramenta com validação
     public boolean setCategoriaFerramenta() {
@@ -204,7 +207,8 @@ public class Ferramenta extends IdAutomatico {
                     "ID: " + ferramenta.getId() +
                             "\nNome: " + ferramenta.getNomeFerramenta() +
                             "\nDescrição: " + ferramenta.getDescricao() +
-                            "\nCategoria de Ferramenta: " + ferramenta.getCategoriaFerramenta().getCategoriaFerramenta() +
+                            "\nCategoria de Ferramenta: " + ferramenta.getCategoriaFerramenta().getCategoriaFerramenta()
+                            +
                             "\nStatus: " + ferramenta.getStatus().getDescricao() +
                             "\n");
         }

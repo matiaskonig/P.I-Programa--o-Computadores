@@ -15,7 +15,7 @@ public class CategoriaFerramenta extends IdAutomatico {
         this.categoriaFerramenta = categoriaFerramenta;
     }
 
-    // setter do tipo
+
     public void setCategoriaFerramenta(String categoriaFerramenta) {
         this.categoriaFerramenta = categoriaFerramenta;
     }
