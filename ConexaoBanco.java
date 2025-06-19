@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ConexaoBanco {
-    private static final String URL = "jdbc:postgresql://localhost:5432/seu_banco_de_dados";
+    private static final String URL = "jdbc:postgresql://localhost:5432/xxxxxx";
     private static final String USUARIO = "admin";
     private static final String SENHA = "admin";
 

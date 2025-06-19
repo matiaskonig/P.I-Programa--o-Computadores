@@ -62,6 +62,105 @@ public class CategoriaFerramenta extends IdAutomatico {
         }
     }
 
+    // Método para excluir uma categoria de ferramenta
+    public static void excluirCategoriaFerramenta() {
+        if (categoriaFerramentas.isEmpty()) {
+            System.out.println("Não existem categorias de ferramentas cadastradas!");
+            return;
+        }
+
+        int idCategoria;
+        System.out.println("Digite o ID da categoria de ferramenta a ser excluída:");
+        do {
+            while (!scanner.hasNextInt()) {
+                System.out.println("Digite um número válido.");
+                scanner.next();
+            }
+
+            idCategoria = scanner.nextInt();
+            scanner.nextLine();
+
+            CategoriaFerramenta categoriaParaExcluir = null;
+            for (CategoriaFerramenta categoria : categoriaFerramentas) {
+                if (categoria.getId() == idCategoria) {
+                    categoriaParaExcluir = categoria;
+                    break;
+                }
+            }
+
+            if (categoriaParaExcluir != null) {
+                categoriaFerramentas.remove(categoriaParaExcluir);
+                System.out.println("Categoria de ferramenta excluída com sucesso!");
+                return;
+            } else {
+                System.out.println("ID não encontrado.");
+            }
+        } while (true);
+    }
+
+    // Método para excluir uma categoria de ferramenta com objeto
+    public static void excluirCategoriaFerramenta(CategoriaFerramenta categoriaFerramenta) {
+        if (categoriaFerramentas.isEmpty()) {
+            System.out.println("Não existem categorias de ferramentas cadastradas!");
+            return;
+        }
+
+        int idCategoria;
+        System.out.println("Digite o ID da categoria de ferramenta a ser excluída:");
+        do {
+            while (!scanner.hasNextInt()) {
+                System.out.println("Digite um número válido.");
+                scanner.next();
+            }
+
+            idCategoria = scanner.nextInt();
+            scanner.nextLine();
+
+            if (categoriaFerramenta.getId() == idCategoria) {
+                break;
+            } else {
+                System.out.println("ID não encontrado.");
+            }
+        } while (true);
+
+    }
+
+    // Método para alterar os dados de uma categoria de ferramenta
+    public static void alterarCategoriaFerramenta() {
+        if (categoriaFerramentas.isEmpty()) {
+            System.out.println("Não existem categorias de ferramentas cadastradas!");
+            return;
+        }
+
+        int idCategoria;
+        System.out.println("Digite o ID da categoria de ferramenta a ser alterada:");
+        do {
+            while (!scanner.hasNextInt()) {
+                System.out.println("Digite um número válido.");
+                scanner.next();
+            }
+
+            idCategoria = scanner.nextInt();
+            scanner.nextLine();
+
+            CategoriaFerramenta categoriaParaAlterar = null;
+            for (CategoriaFerramenta categoria : categoriaFerramentas) {
+                if (categoria.getId() == idCategoria) {
+                    categoriaParaAlterar = categoria;
+                    break;
+                }
+            }
+
+            if (categoriaParaAlterar != null) {
+                categoriaParaAlterar.setCategoriaFerramenta(null);
+                System.out.println("Categoria de ferramenta alterada com sucesso!");
+                return;
+            } else {
+                System.out.println("ID não encontrado.");
+            }
+        } while (true);
+    }
+
     // Método para obter a lista de tipos de ferramentas
     public static List<CategoriaFerramenta> getCategoriaFerramentas() {
         return categoriaFerramentas;

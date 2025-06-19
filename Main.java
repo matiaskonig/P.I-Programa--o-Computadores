@@ -121,6 +121,7 @@ public class Main {
                         }
                     } while (opcaoConsultar != 6);
                     break;
+                }
                 
                 case 3: {
                     // Submenu Alterar
@@ -171,8 +172,8 @@ public class Main {
                         System.out.println("\nMenu de Excluir");
                         System.out.println("1. Excluir Ferramenta");
                         System.out.println("2. Excluir Colaborador");
-                        System.out.println("3. Excluir Manutenção");
-                        System.out.println("4. Excluir Categoria de Ferramenta");
+                        System.out.println("3. Excluir Categoria de Ferramenta");
+                        System.out.println("4. Excluir Empréstimo");
                         System.out.println("5. Voltar ao Menu Principal");
 
                         while (!scanner.hasNextInt()) {
@@ -190,10 +191,10 @@ public class Main {
                                 Colaborador.excluirColaborador();
                                 break;
                             case 3:
-                                Manutencao.excluirManutencao();
+                                CategoriaFerramenta.excluirCategoriaFerramenta();
                                 break;
                             case 4:
-                                CategoriaFerramenta.excluirCategoriaFerramenta();
+                                // ControleFerramenta.excluirEmprestimo();
                                 break;
                             case 5:
                                 System.out.println("Voltando ao menu principal...");
