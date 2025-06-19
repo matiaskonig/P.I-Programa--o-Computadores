@@ -8,7 +8,10 @@ public class Ferramenta extends IdAutomatico {
     private String descricao;
     private Status status;
     private CategoriaFerramenta categoriaFerramenta;
+
+    // cria um objeto scanner para leitura de dados do usuário
     private static Scanner scanner = new Scanner(System.in);
+    // cria uma lista para armazenar as ferramentas
     private static List<Ferramenta> ferramentas = new ArrayList<>();
 
     // Enum de Status
@@ -34,6 +37,7 @@ public class Ferramenta extends IdAutomatico {
             return descricao;
         }
 
+        // Método para obter o Status pelo código
         public static Status getByCodigo(int codigo) {
             for (Status status : values()) {
                 if (status.getCodigo() == codigo) {
@@ -46,7 +50,7 @@ public class Ferramenta extends IdAutomatico {
 
     // Construtor
     public Ferramenta(String nomeFerramenta, String descricao, Status status, CategoriaFerramenta categoriaFerramenta) {
-        super();
+        super(); // chama o construtor da classe IdAutomatico
         this.nomeFerramenta = nomeFerramenta;
         this.descricao = descricao;
         this.status = status;
@@ -120,6 +124,7 @@ public class Ferramenta extends IdAutomatico {
         return status;
     }
 
+    // Método para definir o status automaticamente
     public void setStatusAutomatico(Status status) {
         if (status == null) {
             throw new IllegalArgumentException("Status não pode ser nulo.");
@@ -129,6 +134,7 @@ public class Ferramenta extends IdAutomatico {
 
     // Método para definir o tipo de ferramenta com validação
     public boolean setCategoriaFerramenta() {
+        // Lista de categorias de ferramentas
         List<CategoriaFerramenta> categorias = CategoriaFerramenta.getCategoriaFerramentas();
         if (categorias.isEmpty()) {
             System.out.println("\nNão existem categorias de ferramentas cadastradas!" +
@@ -136,13 +142,16 @@ public class Ferramenta extends IdAutomatico {
             return false;
         }
 
+        // Exibe as categorias disponíveis
         System.out.println("\nCategorias de ferramentas disponíveis:");
         for (CategoriaFerramenta categoria : categorias) {
             System.out.println("ID: " + categoria.getId() + " - Categoria: " + categoria.getCategoriaFerramenta());
         }
 
+        // Solicita ao usuário que escolha uma categoria
         System.out.println("\nDigite o ID da categoria de ferramenta:");
         while (true) {
+            // Verifica se o input é um número inteiro
             try {
                 int idCategoria = scanner.nextInt();
                 scanner.nextLine();
@@ -172,6 +181,7 @@ public class Ferramenta extends IdAutomatico {
 
         Ferramenta ferramenta = new Ferramenta(null, null, null, null);
 
+        // Solicitar informações da ferramenta
         if (!ferramenta.setCategoriaFerramenta()) {
             return;
         }
@@ -201,6 +211,7 @@ public class Ferramenta extends IdAutomatico {
             return;
         }
 
+        // Ordenar as ferramentas por ID
         System.out.println("\nLista de Ferramentas:");
         for (Ferramenta ferramenta : ferramentas) {
             System.out.println(
@@ -217,5 +228,79 @@ public class Ferramenta extends IdAutomatico {
     // Método para buscar uma ferramenta por ID
     public static List<Ferramenta> getFerramentas() {
         return ferramentas;
+    }
+
+    public static void excluirFerramenta() {
+
+        if (ferramentas.isEmpty()) {
+            System.out.println("Não existem ferramentas cadastradas!");
+            return;
+        }
+
+        int id;
+        do {
+            System.out.println("Digite o ID da ferramenta que deseja excluir:");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Digite um número válido.");
+                scanner.next();
+            }
+            
+            id = scanner.nextInt();
+            scanner.nextLine(); // limpa o buffer
+
+            Ferramenta ferramentaParaExcluir = null;
+            for (Ferramenta ferramenta : ferramentas) {
+                if (ferramenta.getId() == id) {
+                    ferramentaParaExcluir = ferramenta;
+                    break;
+                }
+            }
+
+            if (ferramentaParaExcluir != null) {
+                ferramentas.remove(ferramentaParaExcluir);
+                System.out.println("Ferramenta excluída com sucesso!");
+                return;
+            } else {
+                System.out.println("ID não encontrado. Tente novamente.");
+            }
+        } while (true);
+    }
+
+    // Método para alterar uma ferramenta
+    public static void alterarFerramenta() {
+        if (ferramentas.isEmpty()) {
+            System.out.println("Não existem ferramentas cadastradas!");
+            return;
+        }
+
+        int id;
+        do {
+            System.out.println("Digite o ID da ferramenta que deseja alterar:");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Digite um número válido.");
+                scanner.next();
+            }
+            
+            id = scanner.nextInt();
+            scanner.nextLine(); // limpa o buffer
+
+            Ferramenta ferramentaParaAlterar = null;
+            for (Ferramenta ferramenta : ferramentas) {
+                if (ferramenta.getId() == id) {
+                    ferramentaParaAlterar = ferramenta;
+                    break;
+                }
+            }
+
+            if (ferramentaParaAlterar != null) {
+                ferramentaParaAlterar.setNomeFerramenta(null);
+                ferramentaParaAlterar.setDescricao(null);
+                ferramentaParaAlterar.setStatus(null);
+                System.out.println("Ferramenta alterada com sucesso!");
+                return;
+            } else {
+                System.out.println("ID não encontrado.");
+            }
+        } while (true);
     }
 }

@@ -116,6 +116,7 @@ public class Colaborador extends IdAutomatico {
 
         int funcaoCodigo;
         do {
+            // Verifica se o input é um número inteiro
             while (!scanner.hasNextInt()) {
                 System.out.println("Digite um número válido.");
                 scanner.next();
@@ -131,7 +132,6 @@ public class Colaborador extends IdAutomatico {
         this.funcao = Funcao.getByCodigo(funcaoCodigo);
     }
 
-    // Getter para a função
     public Funcao getFuncao() {
         return funcao;
     }
@@ -154,6 +154,7 @@ public class Colaborador extends IdAutomatico {
                 System.out.println("Digite um número entre 1 e 2!");
             }
         } while (statusCodigo < 1 || statusCodigo > 2);
+        // Define o status com base no código fornecido
         this.status = Status.getByCodigo(statusCodigo);
     }
 
@@ -161,7 +162,7 @@ public class Colaborador extends IdAutomatico {
         return status;
     }
 
-    // Método estático para cadastrar um novo colaborador
+    // Método para cadastrar um novo colaborador
     public static void cadastrarColaborador() {
         Colaborador colaborador = new Colaborador(null, null, null);
         colaborador.setNomeColaborador(null);
@@ -170,6 +171,7 @@ public class Colaborador extends IdAutomatico {
 
         // Adiciona o colaborador à lista de colaboradores
         colaboradores.add(colaborador);
+        // Exibe mensagem de sucesso
         System.out.println("Colaborador cadastrado com sucesso!" +
                 "\nID: " + colaborador.getId() +
                 "\nNome: " + colaborador.nomeColaborador +
@@ -196,7 +198,86 @@ public class Colaborador extends IdAutomatico {
         }
     }
 
+    // Método para buscar um colaborador pelo ID
     public static List<Colaborador> getColaboradores() {
         return colaboradores;
     }
+
+    public static void excluirColaborador() {
+        if (colaboradores.isEmpty()) {
+            System.out.println("Não existem colaboradores cadastrados!");
+            return;
+        }
+
+        int idColaborador;
+
+        System.out.println("Digite o ID do colaborador a ser excluído:");
+        do {
+            while (!scanner.hasNextInt()) {
+                System.out.println("Digite um número válido.");
+                scanner.next();
+            }
+
+            idColaborador = scanner.nextInt();
+            scanner.nextLine();
+
+            Colaborador colaboradorParaExcluir = null;
+            for (Colaborador c : colaboradores) {
+                if (c.getId() == idColaborador) {
+                    colaboradorParaExcluir = c;
+                    break;
+                }
+
+                if(colaboradorParaExcluir != null) {
+                    colaboradores.remove(colaboradorParaExcluir);
+                    System.out.println("Colaborador excluído com sucesso!");
+                }
+                else{
+                    System.out.println("ID não encontrado.");
+                }
+            }
+        } while (true);
+    }
+    
+    // Método para alterar os dados de um colaborador
+    public static void alterarColaborador() {
+        if (colaboradores.isEmpty()) {
+            System.out.println("Não existem colaboradores cadastrados!");
+            return;
+        }
+
+        int idColaborador;
+
+        System.out.println("Digite o ID do colaborador a ser alterado:");
+        do {
+            while (!scanner.hasNextInt()) {
+                System.out.println("Digite um número válido.");
+                scanner.next();
+            }
+
+            idColaborador = scanner.nextInt();
+            scanner.nextLine();
+
+            Colaborador colaboradorParaAlterar = null;
+            for (Colaborador c : colaboradores) {
+                if (c.getId() == idColaborador) {
+                    colaboradorParaAlterar = c;
+                    break;
+                }
+            }
+
+            if (colaboradorParaAlterar != null) {
+                System.out.println("Digite o novo nome do colaborador:");
+                String novoNome = scanner.nextLine().trim().toUpperCase();
+                colaboradorParaAlterar.setNomeColaborador(novoNome);
+                colaboradorParaAlterar.setFuncao(null);
+                colaboradorParaAlterar.setStatus(null);
+                System.out.println("Colaborador alterado com sucesso!");
+                return;
+            } else {
+                System.out.println("ID não encontrado.");
+            }
+        } while (true);
+    }
+
 }

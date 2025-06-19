@@ -340,6 +340,7 @@ public class Manutencao extends IdAutomatico {
 
         Manutencao manutencao = new Manutencao(null, null, null, null, null, null, null, null, null);
 
+        // Solicita o código da ferramenta
         if (!manutencao.setFerramenta()) {
             return;
         }
