@@ -237,6 +237,8 @@ public class Ferramenta extends IdAutomatico {
             return;
         }
 
+        listarFerramentas();
+
         int id;
         do {
             System.out.println("Digite o ID da ferramenta que deseja excluir:");
@@ -252,16 +254,14 @@ public class Ferramenta extends IdAutomatico {
             for (Ferramenta ferramenta : ferramentas) {
                 if (ferramenta.getId() == id) {
                     ferramentaParaExcluir = ferramenta;
-                    break;
+                    System.out.println("Ferramenta: " + ferramenta.getNomeFerramenta() + " excluída com sucesso!");
+                    ferramentas.remove(ferramenta);
+                    return;
                 }
-            }
-
-            if (ferramentaParaExcluir != null) {
-                ferramentas.remove(ferramentaParaExcluir);
-                System.out.println("Ferramenta excluída com sucesso!");
-                return;
-            } else {
-                System.out.println("ID não encontrado. Tente novamente.");
+                // Se o ID não for encontrado, exibe uma mensagem
+                else {
+                    System.out.println("ID não encontrado.");
+                }
             }
         } while (true);
     }
@@ -272,6 +272,8 @@ public class Ferramenta extends IdAutomatico {
             System.out.println("Não existem ferramentas cadastradas!");
             return;
         }
+
+        listarFerramentas();
 
         int id;
         do {

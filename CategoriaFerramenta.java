@@ -4,50 +4,48 @@ import java.util.List;
 
 public class CategoriaFerramenta extends IdAutomatico {
     private String categoriaFerramenta;
-    // cria uma lista para armazenar os tipos de ferramentas
     private static List<CategoriaFerramenta> categoriaFerramentas = new ArrayList<>();
-    // cria um objeto scanner para leitura de dados do usuário
     private static Scanner scanner = new Scanner(System.in);
 
-    // construtor da classe
+    // Construtor da classe
     public CategoriaFerramenta(String categoriaFerramenta) {
-        super(); // chama o construtor da classe IdAutomatico
+        super();
         this.categoriaFerramenta = categoriaFerramenta;
     }
 
-
     public void setCategoriaFerramenta(String categoriaFerramenta) {
-        this.categoriaFerramenta = categoriaFerramenta;
+        do {
+            System.out.println("Digite o nome da categoria: ");
+            categoriaFerramenta = scanner.nextLine().trim().toUpperCase();
+
+            if (categoriaFerramenta.isEmpty() || categoriaFerramenta.length() < 3) {
+                System.out.println("O nome da categoria deve ter pelo menos 3 caracteres.");
+            } else {
+                this.categoriaFerramenta = categoriaFerramenta;
+                break;
+            }
+        } while (true);
     }
 
     public String getCategoriaFerramenta() {
         return categoriaFerramenta;
     }
 
-    @Override
-    public String toString() {
-        return this.getCategoriaFerramenta();
-    }
-
     // Método para cadastrar um novo tipo de ferramenta
     public static void cadastrarCategoriaFerramenta() {
-        do {
-            System.out.println("Digite a categoria de ferramenta:");
-            String novoTipo = scanner.nextLine().trim().toUpperCase();
+        System.out.println("Digite a categoria de ferramenta: ");
+        String novoTipo = scanner.nextLine().trim().toUpperCase();
 
-            if (novoTipo.isEmpty() || novoTipo.length() < 3) {
-                System.out.println("A categoria deve ter pelo menos 3 caracteres.");
-                continue;
-            }
+        if (novoTipo.isEmpty() || novoTipo.length() < 3) {
+            System.out.println("A categoria deve ter pelo menos 3 caracteres.");
+            return;
+        }
 
-            CategoriaFerramenta categoriaFerramenta = new CategoriaFerramenta(novoTipo);
-            categoriaFerramentas.add(categoriaFerramenta);
-            System.out.println("Categoria de ferramenta cadastrado com sucesso!" +
-                    "\nID: " + categoriaFerramenta.getId() +
-                    "\nCategoria de Ferramenta: " + categoriaFerramenta.getCategoriaFerramenta());
-            break;
-
-        } while (true);
+        CategoriaFerramenta categoriaFerramenta = new CategoriaFerramenta(novoTipo);
+        categoriaFerramentas.add(categoriaFerramenta);
+        System.out.println("Categoria de ferramenta cadastrada com sucesso!" +
+                "\nID: " + categoriaFerramenta.getId() +
+                "\nCategoria de Ferramenta: " + categoriaFerramenta.getCategoriaFerramenta());
     }
 
     // Método para listar os tipos de ferramentas
@@ -58,7 +56,8 @@ public class CategoriaFerramenta extends IdAutomatico {
         }
         System.out.println("Lista de Categorias de Ferramentas:");
         for (CategoriaFerramenta categoria : categoriaFerramentas) {
-            System.out.println("ID: " + categoria.getId() + " - Categoria: " + categoria.getCategoriaFerramenta() + "\n");
+            System.out
+                    .println("ID: " + categoria.getId() + " - Categoria: " + categoria.getCategoriaFerramenta() + "\n");
         }
     }
 
@@ -69,6 +68,7 @@ public class CategoriaFerramenta extends IdAutomatico {
             return;
         }
 
+        listarCategoriaFerramentas();
         int idCategoria;
         System.out.println("Digite o ID da categoria de ferramenta a ser excluída:");
         do {
@@ -81,45 +81,17 @@ public class CategoriaFerramenta extends IdAutomatico {
             scanner.nextLine();
 
             CategoriaFerramenta categoriaParaExcluir = null;
-            for (CategoriaFerramenta categoria : categoriaFerramentas) {
-                if (categoria.getId() == idCategoria) {
-                    categoriaParaExcluir = categoria;
-                    break;
+            for (CategoriaFerramenta c : categoriaFerramentas) {
+                if (c.getId() == idCategoria) {
+                    categoriaParaExcluir = c;
+                    System.out.println(
+                            "Categoria de ferramenta: " + c.getCategoriaFerramenta() + " excluída com sucesso!");
+                    categoriaFerramentas.remove(c);
+
+                    return;
+                } else {
+                    System.out.println("ID não encontrado.");
                 }
-            }
-
-            if (categoriaParaExcluir != null) {
-                categoriaFerramentas.remove(categoriaParaExcluir);
-                System.out.println("Categoria de ferramenta excluída com sucesso!");
-                return;
-            } else {
-                System.out.println("ID não encontrado.");
-            }
-        } while (true);
-    }
-
-    // Método para excluir uma categoria de ferramenta com objeto
-    public static void excluirCategoriaFerramenta(CategoriaFerramenta categoriaFerramenta) {
-        if (categoriaFerramentas.isEmpty()) {
-            System.out.println("Não existem categorias de ferramentas cadastradas!");
-            return;
-        }
-
-        int idCategoria;
-        System.out.println("Digite o ID da categoria de ferramenta a ser excluída:");
-        do {
-            while (!scanner.hasNextInt()) {
-                System.out.println("Digite um número válido.");
-                scanner.next();
-            }
-
-            idCategoria = scanner.nextInt();
-            scanner.nextLine();
-
-            if (categoriaFerramenta.getId() == idCategoria) {
-                break;
-            } else {
-                System.out.println("ID não encontrado.");
             }
         } while (true);
 
@@ -132,6 +104,7 @@ public class CategoriaFerramenta extends IdAutomatico {
             return;
         }
 
+        listarCategoriaFerramentas();
         int idCategoria;
         System.out.println("Digite o ID da categoria de ferramenta a ser alterada:");
         do {

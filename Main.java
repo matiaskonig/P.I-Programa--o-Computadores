@@ -14,9 +14,8 @@ public class Main {
             System.out.println("2. Consultar"); 
             System.out.println("3. Alterar");
             System.out.println("4. Excluir");
-            System.out.println("5. Realizar Empréstimo");
-            System.out.println("6. Relatórios");
-            System.out.println("7. Sair");
+            System.out.println("5. Relatórios");
+            System.out.println("6. Sair");
 
             // Validação da entrada
             do {
@@ -27,10 +26,10 @@ public class Main {
                 opcao = scanner.nextInt();
                 scanner.nextLine();
                 
-                if (opcao < 1 || opcao > 7) {
+                if (opcao < 1 || opcao > 6) {
                     System.out.println("Digite um número entre 1 e 7!");
                 }
-            } while (opcao < 1 || opcao > 7);
+            } while (opcao < 1 || opcao > 6);
 
             switch (opcao) {
                 case 1: {
@@ -42,7 +41,7 @@ public class Main {
                         System.out.println("2. Cadastrar Colaborador");
                         System.out.println("3. Cadastrar Categoria de Ferramenta");
                         System.out.println("4. Cadastrar Manutenção");
-                        System.out.println("5. Cadastrar Controle de Ferramenta"); //a fazer
+                        System.out.println("5. Cadastrar Controle de Ferramenta");
                         System.out.println("6. Voltar ao Menu Principal");
 
                         while (!scanner.hasNextInt()) {
@@ -66,9 +65,10 @@ public class Main {
                                 Manutencao.cadastrarManutencao();
                                 break;
                             case 5:
-                                // ControleFerramenta.cadastrarControleFerramenta(); 
+                                ControleFerramenta.cadastrarControleFerramenta();
+                                break; 
                             case 6:
-                                System.out.println("Voltando ao menu principal...");
+                                System.out.println("Voltar ao menu principal...");
                                 break;
                             default:
                                 System.out.println("Opção inválida!");
@@ -111,9 +111,10 @@ public class Main {
                                 CategoriaFerramenta.listarCategoriaFerramentas();
                                 break;
                             case 5:
-                                // ControleFerramenta.listarControleFerramentas();
+                                ControleFerramenta.listarControlesFerramentas();
+                                break;
                             case 6:
-                                System.out.println("Voltando ao menu principal...");
+                                System.out.println("Voltar ao menu principal...");
                                 break;
                             default:
                                 System.out.println("Opção inválida!");
@@ -132,7 +133,8 @@ public class Main {
                         System.out.println("2. Alterar Colaborador");
                         System.out.println("3. Alterar Manutenção");
                         System.out.println("4. Alterar Categoria de Ferramenta");
-                        System.out.println("5. Voltar ao Menu Principal");
+                        System.out.println("5. Alterar Controle de Ferramenta");
+                        System.out.println("6. Voltar ao Menu Principal");
 
                         while (!scanner.hasNextInt()) {
                             System.out.println("Digite um número válido.");
@@ -155,13 +157,16 @@ public class Main {
                                 CategoriaFerramenta.alterarCategoriaFerramenta();
                                 break;
                             case 5:
-                                System.out.println("Voltando ao menu principal...");
+                                ControleFerramenta.alterarControleFerramenta();
+                                break;
+                            case 6:
+                                System.out.println("Voltar ao menu principal...");
                                 break;
                             default:
                                 System.out.println("Opção inválida!");
                                 break;
                         }
-                    } while (opcaoAlterar != 5);
+                    } while (opcaoAlterar != 6);
                     break;
                 }
 
@@ -194,10 +199,10 @@ public class Main {
                                 CategoriaFerramenta.excluirCategoriaFerramenta();
                                 break;
                             case 4:
-                                // ControleFerramenta.excluirEmprestimo();
+                                ControleFerramenta.excluirControleFerramenta();
                                 break;
                             case 5:
-                                System.out.println("Voltando ao menu principal...");
+                                System.out.println("Voltar ao menu principal...");
                                 break;
                             default:
                                 System.out.println("Opção inválida!");
@@ -206,45 +211,11 @@ public class Main {
                     } while (opcaoExcluir != 5);
                     break;
                 }
-
-                case 5: {
-                    // Submenu Empréstimo
-                    int opcaoEmprestimo;
-                    do {
-                        System.out.println("\nMenu de Empréstimo");
-                        System.out.println("1. Realizar Empréstimo de Ferramenta");
-                        System.out.println("2. Devolver Ferramenta");
-                        System.out.println("3. Voltar ao Menu Principal");
-
-                        while (!scanner.hasNextInt()) {
-                            System.out.println("Digite um número válido.");
-                            scanner.nextLine();
-                        }
-                        opcaoEmprestimo = scanner.nextInt();
-                        scanner.nextLine();
-
-                        switch (opcaoEmprestimo) {
-                            case 1:
-                                ControleFerramenta.realizarEmprestimo();
-                                break;
-                            case 2:
-                                ControleFerramenta.devolverFerramenta();
-                                break;
-                            case 3:
-                                System.out.println("Voltando ao menu principal...");
-                                break;
-                            default:
-                                System.out.println("Opção inválida!");
-                                break;
-                        }
-                    } while (opcaoEmprestimo != 3);
-                    break;
-                }   
             }
-        } while (opcao != 7);
+        } while (opcao != 6);
 
         scanner.close();
         System.out.println("Sistema encerrado.");
     }
 }
-}
+

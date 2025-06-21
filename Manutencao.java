@@ -413,6 +413,50 @@ public class Manutencao extends IdAutomatico {
         }
     }
 
+    public static void alterarManutencao(){
+        if (manutencoes.isEmpty()) {
+            System.out.println("Não existem manutenções cadastradas!");
+            return;
+        }
+
+        System.out.println("Digite o ID da manutenção que deseja alterar:");
+        int idManutencao;
+
+        do {
+            while (!scanner.hasNextInt()) {
+                System.out.println("Digite um número válido.");
+                scanner.next();
+            }
+
+            idManutencao = scanner.nextInt();
+            scanner.nextLine();
+
+            Manutencao manutencaoParaAlterar = null;   
+            for (Manutencao manutencao : manutencoes) {
+                if (manutencao.getId() == idManutencao) {
+                    manutencaoParaAlterar = manutencao;
+                    break;
+                }
+            }
+
+            if (manutencaoParaAlterar != null) {
+                manutencaoParaAlterar.setDescricaoRealizada();
+                manutencaoParaAlterar.setDataFimManutencao();
+
+                // Atualiza a lista de manutenções
+                manutencoes.set(manutencoes.indexOf(manutencaoParaAlterar), manutencaoParaAlterar);
+
+                // Altera o status da ferramenta para disponivel
+                manutencaoParaAlterar.getFerramenta().setStatusAutomatico(Ferramenta.Status.DISPONIVEL);
+                
+                System.out.println("Manutenção alterada com sucesso!");
+                return;
+            } else {
+                System.out.println("ID não encontrado.");
+            }
+        } while (true);
+    }
+
     // Método para listar as manutenções
     public static List<Manutencao> getManutencoes() {
         return manutencoes;

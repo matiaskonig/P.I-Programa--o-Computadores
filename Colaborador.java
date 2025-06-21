@@ -209,6 +209,8 @@ public class Colaborador extends IdAutomatico {
             return;
         }
 
+        listarColaboradores();
+
         int idColaborador;
 
         System.out.println("Digite o ID do colaborador a ser excluído:");
@@ -225,13 +227,12 @@ public class Colaborador extends IdAutomatico {
             for (Colaborador c : colaboradores) {
                 if (c.getId() == idColaborador) {
                     colaboradorParaExcluir = c;
-                    break;
+                    // Exclui o colaborador da lista
+                    colaboradores.remove(c);
+                    System.out.println("Colaborador: " + c.getNomeColaborador() + " excluído com sucesso!");
+                    return;
                 }
 
-                if(colaboradorParaExcluir != null) {
-                    colaboradores.remove(colaboradorParaExcluir);
-                    System.out.println("Colaborador excluído com sucesso!");
-                }
                 else{
                     System.out.println("ID não encontrado.");
                 }
@@ -246,6 +247,8 @@ public class Colaborador extends IdAutomatico {
             return;
         }
 
+        listarColaboradores();
+        
         int idColaborador;
 
         System.out.println("Digite o ID do colaborador a ser alterado:");
@@ -262,14 +265,14 @@ public class Colaborador extends IdAutomatico {
             for (Colaborador c : colaboradores) {
                 if (c.getId() == idColaborador) {
                     colaboradorParaAlterar = c;
+                    System.out.println("Colaborador: " + c.getNomeColaborador());
                     break;
                 }
             }
 
             if (colaboradorParaAlterar != null) {
-                System.out.println("Digite o novo nome do colaborador:");
-                String novoNome = scanner.nextLine().trim().toUpperCase();
-                colaboradorParaAlterar.setNomeColaborador(novoNome);
+
+                colaboradorParaAlterar.setNomeColaborador(null);
                 colaboradorParaAlterar.setFuncao(null);
                 colaboradorParaAlterar.setStatus(null);
                 System.out.println("Colaborador alterado com sucesso!");
