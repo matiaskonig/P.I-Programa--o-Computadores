@@ -240,7 +240,12 @@ public class ControleFerramenta extends IdAutomatico {
                 System.out.println("Ferramenta adicionada: " + ferramentaSelecionada.get().getNomeFerramenta());
                 ferramentasDisponiveis.remove(ferramentaSelecionada.get());
 
-                // Perguntar se o usuário deseja adicionar mais
+                // Perguntar se deseja adicionar mais
+                if (ferramentasDisponiveis.isEmpty()) {
+                    System.out.println("Não há mais ferramentas disponíveis para adicionar.");
+                    break;
+                }
+
                 System.out.println("Deseja adicionar outra ferramenta? (S/N)");
                 String resposta = scanner.nextLine().trim().toUpperCase();
 
@@ -363,6 +368,9 @@ public class ControleFerramenta extends IdAutomatico {
 
             if (controleParaAlterar != null) {
                 controleParaAlterar.setDataFimEmprestimo();
+                for (Ferramenta f : controleParaAlterar.getFerramentas()) {
+                    f.setStatusAutomatico(Ferramenta.Status.DISPONIVEL);
+                }
                 System.out.println("Controle de ferramenta alterada com sucesso!");
                 return;
             } else {
@@ -401,5 +409,10 @@ public class ControleFerramenta extends IdAutomatico {
             }
             System.out.println("ID não encontrado.");
         } while (true);
+    }
+
+    // Método para obter a lista de controles de ferramentas
+    public static List<ControleFerramenta> getControleFerramentas() {
+        return controleFerramentas;
     }
 }

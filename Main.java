@@ -211,6 +211,48 @@ public class Main {
                     } while (opcaoExcluir != 5);
                     break;
                 }
+
+                case 5: {
+                    // Submenu Relatórios
+                    int opcaoRelatorio;
+                    do {
+                        System.out.println("\nMenu de Relatórios");
+                        System.out.println("1. Ferramentas emprestadas");
+                        System.out.println("2. Ferramentas disponíveis");
+                        System.out.println("3. Ferramentas indisponíveis");
+                        System.out.println("4. Ferramentas em manutenção");
+                        System.out.println("5. Voltar");
+
+                        while (!scanner.hasNextInt()) {
+                            System.out.println("Digite um número válido.");
+                            scanner.nextLine();
+                        }
+                        opcaoRelatorio = scanner.nextInt();
+                        scanner.nextLine();
+
+                        switch (opcaoRelatorio) {
+                            case 1:
+                                Relatorio.ferramentasEmprestadas();
+                                break;
+                            case 2:
+                                Relatorio.ferramentasDisponiveis();
+                                break;
+                            case 3:
+                                Relatorio.ferramentasIndisponiveis();
+                                break;
+                            case 4:
+                                Relatorio.ferramentasManutencao();
+                                break;
+                            case 5:
+                                System.out.println("Voltar ao menu principal...");
+                                break;
+                            default:
+                                System.out.println("Opção inválida!");
+                                break;
+                        }
+                    } while (opcaoRelatorio != 5);
+                    break;
+                }
             }
         } while (opcao != 6);
 
